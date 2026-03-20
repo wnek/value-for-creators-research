@@ -1,0 +1,2116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tools, Gaps, and the Fight for Ownership in a $250B Economy">
+  <title>Creator Tools & Platform Features – Research Report 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:   #0a0a0a;
+      --white:   #fff;
+      --yellow:  #ffd400;
+      --off:     #f7f7f8;
+      --border:  #e5e7eb;
+      --muted:   #6b7280;
+      --dark-muted: rgba(255,255,255,0.5);
+      --radius:  20px;
+      --r-sm:    12px;
+      --text:    #1f2937;
+      --text-secondary: #4b5563;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--white);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 56px;
+      background: rgba(0,0,0,0.97);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-logo {
+      font-size: 12px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.9);
+    }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.07em;
+      text-transform: uppercase; color: rgba(255,255,255,0.35);
+      text-decoration: none; transition: color 0.2s;
+      position: relative; padding-bottom: 2px;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+      height: 1px; background: var(--yellow);
+      transform: scaleX(0); transition: transform 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--white); }
+    .nav-links a.active::after { transform: scaleX(1); }
+
+    /* ─── CONTAINERS & SHARED ─── */
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 0 56px; }
+    .label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted);
+      display: inline-block;
+    }
+    .label.on-dark { color: rgba(255,255,255,0.38); }
+    .label.yellow { color: var(--yellow); }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: var(--black);
+      padding: 152px 0 0;
+      overflow: hidden;
+    }
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .hero-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 0 0 56px;
+      display: grid; grid-template-columns: 1fr 480px;
+      align-items: stretch; gap: 64px;
+    }
+    .hero-left { padding-bottom: 100px; display: flex; flex-direction: column; gap: 48px; }
+    .hero-right { position: relative; overflow: hidden; }
+    .hero-right img {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      width: 100%; height: auto;
+      display: block;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-bottom: 48px;
+    }
+    .hero-tag span {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4);
+    }
+    .hero-tag-dot {
+      width: 5px; height: 5px; border-radius: 50%; background: var(--yellow);
+      flex-shrink: 0;
+    }
+    .hero h1 {
+      font-size: clamp(40px, 4vw, 70px);
+      font-weight: 900; letter-spacing: -0.035em; line-height: 1.0;
+      color: var(--white); margin-bottom: 0;
+      text-wrap: balance;
+    }
+    .hero h1 .hl { color: var(--yellow); }
+    .hero-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px;
+      display: flex; flex-direction: column; gap: 32px;
+    }
+    .hero-desc {
+      font-size: 20px; color: rgba(255,255,255,0.5); line-height: 1.75;
+      margin-top: 28px; font-weight: 400; letter-spacing: -0.01em;
+    }
+    .hero-stats { display: flex; gap: 40px; flex-wrap: wrap; }
+    .hero-stat-num {
+      font-size: 32px; font-weight: 900; letter-spacing: -0.04em;
+      color: var(--white); line-height: 1;
+    }
+    .hero-stat-num .hl { color: var(--yellow); }
+    .metric-unit { color: var(--white); }
+    .hero-stat-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: rgba(255,255,255,0.3);
+      margin-top: 6px;
+    }
+
+    /* ─── SECTION BASE ─── */
+    section { padding: 112px 0; }
+    section.dark { background: var(--black); color: var(--white); }
+    section.off  { background: var(--off); }
+    section.white { background: var(--white); }
+
+    .section-head { margin-bottom: 80px; }
+    .section-head h2 {
+      font-size: clamp(32px, 4vw, 54px);
+      font-weight: 900; letter-spacing: -0.03em; line-height: 1.06;
+      margin-top: 14px; text-wrap: balance; color: var(--black);
+    }
+    .section-head p {
+      font-size: 17px; color: var(--muted);
+      max-width: 600px; line-height: 1.75; margin-top: 16px;
+    }
+    .section-head.on-dark h2 { color: var(--white); }
+    .section-head.on-dark p  { color: rgba(255,255,255,0.55); }
+    .section-sub {
+      font-size: 20px; font-weight: 600; letter-spacing: -0.01em;
+      color: rgba(255,255,255,0.55); margin-top: 8px !important;
+    }
+
+    /* ─── KEY INSIGHT BLOCK ─── */
+    .key-insight {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-left: 3px solid var(--yellow);
+      border-radius: var(--r-sm);
+      padding: 20px 24px;
+      margin-bottom: 56px;
+    }
+    .key-insight-label {
+      font-size: 10px; font-weight: 800; letter-spacing: 0.14em;
+      text-transform: uppercase; color: #92400e; margin-bottom: 8px;
+    }
+    .key-insight p {
+      font-size: 15px; line-height: 1.7; color: #78350f; font-weight: 500; margin: 0;
+    }
+
+    /* ─── EXEC SUMMARY ─── */
+    .context-block {
+      max-width: 760px;
+      margin-bottom: 64px;
+      padding: 28px 32px;
+      background: var(--off);
+      border-left: 3px solid var(--yellow);
+      border-radius: var(--r-sm);
+    }
+    .context-block p {
+      font-size: 16px; line-height: 1.8; color: var(--text-secondary);
+    }
+    .insights-list { display: flex; flex-direction: column; }
+    .insight-row {
+      display: grid; grid-template-columns: 72px 1fr;
+      gap: 0; border-top: 1px solid var(--border);
+      padding: 44px 0; cursor: default;
+      transition: background 0.15s;
+    }
+    .insight-row:last-child { border-bottom: 1px solid var(--border); }
+    .insight-row:hover { background: var(--off); margin: 0 -56px; padding: 44px 56px; }
+    .insight-idx {
+      font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
+      color: #d1d5db; padding-top: 4px; font-variant-numeric: tabular-nums;
+    }
+    .insight-body { display: grid; grid-template-columns: 1fr 1fr; gap: 52px; }
+    .insight-body h3 {
+      font-size: 20px; font-weight: 800; letter-spacing: -0.02em;
+      line-height: 1.3; color: var(--black);
+    }
+    .insight-body p {
+      font-size: 15px; color: var(--text-secondary); line-height: 1.8;
+    }
+    .insight-body strong { color: var(--black); font-weight: 700; }
+
+    /* ─── BIG NUMBERS ─── */
+    .numbers-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: rgba(255,255,255,0.07);
+      border-radius: 4px; overflow: hidden;
+    }
+    .number-cell {
+      padding: 48px 40px;
+      background: #0d0d0d;
+      border: none;
+      position: relative;
+      transition: background 0.2s;
+    }
+    .number-cell:hover { background: #141414; }
+    .number-cell-val {
+      font-size: clamp(34px, 3.5vw, 50px);
+      font-weight: 900; letter-spacing: -0.04em;
+      color: var(--white); line-height: 1;
+    }
+    .number-cell-val .hl { color: var(--yellow); }
+    .number-cell-label {
+      font-size: 13px; color: rgba(255,255,255,0.68);
+      margin-top: 14px; line-height: 1.55;
+    }
+    .number-cell-year {
+      font-size: 11px; color: rgba(255,255,255,0.38);
+      margin-top: 8px; letter-spacing: 0.05em; font-weight: 500;
+    }
+    .numbers-takeaway {
+      margin-bottom: 48px;
+      padding: 22px 28px;
+      background: rgba(255,212,0,0.07);
+      border: 1px solid rgba(255,212,0,0.15);
+      border-radius: var(--r-sm);
+    }
+    .numbers-takeaway p {
+      font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.7;
+      font-weight: 400;
+    }
+    .numbers-takeaway strong { color: var(--yellow); font-weight: 700; }
+
+    /* ─── CASE STUDIES ─── */
+    .cases-grid { display: flex; flex-direction: column; gap: 16px; }
+    .case-item {
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 440px;
+      background: var(--off);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 20px;
+      gap: 40px;
+      align-items: start;
+    }
+    .case-item:nth-child(even) .case-img   { order: 2; }
+    .case-item:nth-child(even) .case-content { order: 1; }
+    .case-img {
+      overflow: hidden;
+      border-radius: 14px;
+      min-height: 360px;
+    }
+    .case-img img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      display: block; border-radius: 14px;
+    }
+    .case-placeholder {
+      position: absolute; inset: 0;
+      border-radius: 14px;
+      display: flex; flex-direction: column;
+      align-items: flex-start; justify-content: flex-end;
+      padding: 32px 36px;
+    }
+    .case-placeholder-num {
+      font-size: 120px; font-weight: 900; letter-spacing: -0.06em;
+      line-height: 1; color: rgba(255,255,255,0.12);
+      position: absolute; top: 20px; right: 28px;
+    }
+    .case-placeholder-tag {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.5);
+      margin-bottom: 8px;
+    }
+    .case-placeholder-label {
+      font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.75);
+    }
+    .case-content {
+      padding: 28px 24px 28px 12px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .case-item:nth-child(even) .case-content {
+      padding: 28px 12px 28px 24px;
+    }
+    .case-meta {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;
+    }
+    .case-num {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #9ca3af;
+    }
+    .case-platforms {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.04em;
+      text-transform: uppercase; color: #9ca3af;
+    }
+    .case-pill {
+      display: inline-block; background: var(--yellow); color: var(--black);
+      font-size: 12px; font-weight: 800; letter-spacing: 0.04em;
+      padding: 5px 14px; border-radius: 100px; width: fit-content;
+      margin-top: 24px;
+    }
+    .case-content h3 {
+      font-size: 24px; font-weight: 800; letter-spacing: -0.025em;
+      color: var(--black); margin-bottom: 24px; line-height: 1.25;
+    }
+    .case-content p {
+      font-size: 15px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 12px;
+    }
+    .case-content p:last-child { margin-bottom: 0; }
+    .case-content strong { color: var(--black); font-weight: 700; }
+
+    /* ─── SOLUTIONS ─── */
+    .cat-block { margin-bottom: 88px; }
+    .cat-header {
+      display: flex; align-items: center; gap: 20px;
+      margin-bottom: 24px;
+    }
+    .cat-num {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--black); color: var(--white);
+      padding: 5px 12px; border-radius: 6px; flex-shrink: 0;
+    }
+    .cat-name {
+      font-size: 12px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .cat-line { flex: 1; height: 1px; background: var(--border); }
+    /* ── PLATFORM ENTRIES ── */
+    .tools-row { display: flex; flex-direction: column; gap: 12px; }
+    .platform-entry {
+      background: var(--white); border-radius: var(--radius);
+      border: 1px solid var(--border); overflow: hidden;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .platform-entry:hover {
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+      border-color: #d1d5db;
+    }
+    .pe-header {
+      display: flex; align-items: center; gap: 16px;
+      padding: 20px 28px; border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .pe-logo {
+      width: 36px; height: 36px; border-radius: 9px;
+      object-fit: contain; background: var(--off); flex-shrink: 0;
+    }
+    .pe-name-group { flex: 1; min-width: 0; }
+    .pe-name { font-size: 17px; font-weight: 800; letter-spacing: -0.02em; color: var(--black); }
+    .pe-name-link {
+      font-size: 17px; font-weight: 800; letter-spacing: -0.02em;
+      color: var(--black); text-decoration: none;
+      display: inline-flex; align-items: center;
+      transition: opacity 0.15s;
+    }
+    .pe-name-link:hover { opacity: 0.65; }
+    .pe-sub { font-size: 14px; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+    .pe-prices { display: flex; flex-wrap: wrap; gap: 6px; margin-left: auto; }
+    .pe-price {
+      font-size: 11px; font-weight: 600; white-space: nowrap;
+      background: var(--off); color: #374151;
+      border: 1px solid var(--border);
+      padding: 4px 11px; border-radius: 20px;
+    }
+    .pe-body { display: flex; flex-direction: column; }
+    .pe-imgs {
+      display: flex; flex-wrap: nowrap; gap: 12px;
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--border);
+      background: var(--white);
+      overflow-x: auto;
+    }
+    .pe-img {
+      flex-shrink: 0; border-radius: 12px;
+      overflow: hidden; background: #e8e8e8;
+      max-height: 240px;
+    }
+    .pe-img img { height: 240px; width: auto; display: block; border-radius: 12px; }
+    .pe-info { padding: 28px 32px; display: flex; flex-direction: column; }
+    .pe-info-no-img { padding: 28px 32px; }
+    .sw { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .sw-col { border-radius: var(--r-sm); padding: 16px 18px; }
+    .sw-col { background: var(--off); border: 1px solid var(--border); }
+    .sw-head {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; margin-bottom: 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .sw-head.s { color: #15803d; }
+    .sw-head.w { color: #c2410c; }
+    .sw-head::before { font-size: 13px; }
+    .sw-head.s::before { content: '✓'; }
+    .sw-head.w::before { content: '△'; }
+    .sw-col ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .sw-col li {
+      font-size: 13px; color: var(--text-secondary); line-height: 1.5;
+      padding-left: 14px; position: relative;
+    }
+    .sw-col:first-child li::before { content: '·'; position: absolute; left: 0; color: #15803d; font-weight: 700; }
+    .sw-col:last-child  li::before { content: '·'; position: absolute; left: 0; color: #c2410c; font-weight: 700; }
+    .integrations { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+    .int-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
+    }
+    .int-tags { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+    .itag {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11px; font-weight: 500; color: #555;
+      background: var(--off); border-radius: 6px; padding: 3px 8px;
+    }
+    .itag img {
+      width: 14px; height: 14px; border-radius: 3px;
+      object-fit: contain; flex-shrink: 0;
+    }
+    .itag.logo-only {
+      padding: 5px; background: var(--off); border-radius: 8px;
+    }
+    .itag.logo-only img { width: 18px; height: 18px; border-radius: 4px; }
+
+    /* ─── ALERTS ─── */
+    .alert {
+      border-radius: var(--r-sm); padding: 24px 32px;
+      font-size: 15px; line-height: 1.75; margin-top: 24px;
+    }
+    .alert.gap {
+      background: var(--yellow); color: var(--black);
+    }
+    .alert.gap strong { font-weight: 800; }
+    .alert.shift {
+      background: var(--black); color: rgba(255,255,255,0.65);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .alert.shift strong { color: var(--white); }
+
+    /* ─── PLATFORM FEATURES ─── */
+    .platform-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: rgba(255,255,255,0.06);
+      border-radius: 4px; overflow: hidden;
+    }
+    .pf-card {
+      background: #0d0d0d; padding: 40px 36px;
+      transition: background 0.2s;
+    }
+    .pf-card:hover { background: #141414; }
+    .pf-icon {
+      font-size: 22px; margin-bottom: 18px; display: block;
+    }
+    .pf-card h3 {
+      font-size: 16px; font-weight: 800; letter-spacing: -0.01em;
+      color: var(--white); margin-bottom: 12px; line-height: 1.35;
+    }
+    .pf-card p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.75; }
+    .pf-card strong { color: rgba(255,255,255,0.85); }
+    .pf-stat {
+      font-size: 26px; font-weight: 900; letter-spacing: -0.03em;
+      color: var(--yellow); margin-top: 24px; line-height: 1;
+    }
+    .pf-stat span { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.35); display: block; margin-top: 5px; }
+
+    /* ─── COMPARISON TABLE ─── */
+    .comp-table { width: 100%; border-collapse: collapse; }
+    .comp-table thead th {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted);
+      padding: 0 0 16px; text-align: left; border-bottom: 2px solid var(--black);
+    }
+    .comp-table tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+    .comp-table tbody tr:hover { background: var(--off); }
+    .comp-table td { padding: 18px 0; font-size: 14px; color: var(--text-secondary); vertical-align: middle; padding-right: 24px; line-height: 1.5; }
+    .comp-table td:first-child { font-weight: 700; color: var(--black); }
+    .comp-table td:nth-child(2) { font-weight: 600; color: var(--text); }
+    .gap-pill {
+      display: inline-block; background: #fff3cd; color: #7d4a00;
+      font-size: 11px; font-weight: 700; border-radius: 4px; padding: 3px 9px;
+      border: 1px solid #f0a500;
+      position: relative; padding-left: 20px;
+    }
+    .gap-pill::before {
+      content: "⚠";
+      position: absolute; left: 6px; top: 50%; transform: translateY(-50%);
+      font-size: 10px;
+    }
+
+    /* ─── SYNTHESIS ─── */
+    .synth-list { display: flex; flex-direction: column; }
+    .synth-row {
+      display: grid; grid-template-columns: 64px 1fr;
+      padding: 52px 0; border-top: 1px solid rgba(255,255,255,0.07);
+      gap: 0;
+    }
+    .synth-row:last-child { border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .synth-idx {
+      font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.2); padding-top: 5px;
+    }
+    .synth-content { display: grid; grid-template-columns: 1fr 1.15fr; gap: 52px; }
+    .synth-content h3 {
+      font-size: 22px; font-weight: 900; letter-spacing: -0.025em;
+      color: var(--white); line-height: 1.25;
+    }
+    .synth-content h3 em { color: var(--yellow); font-style: italic; }
+    .synth-content p {
+      font-size: 15px; color: rgba(255,255,255,0.55); line-height: 1.85;
+    }
+    .synth-content strong { color: rgba(255,255,255,0.8); font-weight: 700; }
+
+    /* ─── FORWARD ─── */
+    .forward-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    }
+    .forward-card {
+      padding: 36px 40px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--off);
+      display: flex; flex-direction: column; gap: 0;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      cursor: default;
+    }
+    .forward-card:hover {
+      border-color: #d1d5db;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+    .forward-card-left {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 28px;
+    }
+    .forward-year {
+      display: inline-block;
+      font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--yellow); color: var(--black);
+      border-radius: 6px; padding: 4px 10px;
+      width: fit-content;
+    }
+    .forward-card-num {
+      font-size: 48px; font-weight: 900; letter-spacing: -0.04em;
+      color: rgba(0,0,0,0.06); line-height: 1;
+    }
+    .forward-card h3 {
+      font-size: 20px; font-weight: 800; letter-spacing: -0.02em;
+      line-height: 1.3; color: var(--black); margin-bottom: 12px;
+    }
+    .forward-card p { font-size: 15px; color: var(--text-secondary); line-height: 1.8; }
+    .forward-intro {
+      font-size: 18px; font-weight: 500; color: var(--muted);
+      line-height: 1.75; max-width: 700px; margin-bottom: 56px;
+      border-left: 3px solid var(--yellow); padding-left: 24px;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--black); color: rgba(255,255,255,0.3);
+      padding: 72px 0 56px;
+      font-size: 13px; line-height: 1.7;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 56px;
+      display: flex; justify-content: space-between; align-items: flex-end;
+      gap: 40px;
+    }
+    .footer-left .footer-title {
+      font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.6);
+      margin-bottom: 6px;
+    }
+    .footer-sources { max-width: 560px; }
+    .footer-sources-head {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.25);
+      margin-bottom: 8px;
+    }
+
+    /* ─── FADE IN ─── */
+    .fi { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .fi.in { opacity: 1; transform: none; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 960px) {
+      nav { padding: 0 28px; }
+      .nav-links { display: none; }
+      .wrap, .hero-inner, .footer-inner { padding-left: 28px; padding-right: 28px; }
+      section { padding: 80px 0; }
+      .hero { padding: 120px 0 80px; }
+      .hero-bottom { flex-direction: column; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-stats { flex-wrap: wrap; gap: 32px; }
+      .insight-body { grid-template-columns: 1fr; gap: 12px; }
+      .numbers-grid { grid-template-columns: 1fr 1fr; }
+      .case-item { grid-template-columns: 1fr; padding: 16px; gap: 16px; }
+      .case-img { min-height: 240px; }
+      .case-item:nth-child(even) .case-img { order: 0; }
+      .case-item:nth-child(even) .case-content { order: 1; padding: 16px 8px; }
+      .case-content { padding: 16px 8px; }
+      .pe-imgs { padding: 16px; gap: 8px; }
+      .pe-img img { height: 160px; }
+      .pe-header { gap: 10px; }
+      .platform-grid { grid-template-columns: 1fr; }
+      .synth-content { grid-template-columns: 1fr; gap: 12px; }
+      .forward-grid { grid-template-columns: 1fr; }
+      .forward-card { padding: 28px 24px; }
+      .forward-card-num { font-size: 40px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+      .insight-row:hover { margin: 0; padding: 40px 0; }
+    }
+    /* ─── AVATAR CIRCLE ─── */
+    #avatar-root { position: fixed; bottom: 32px; right: 32px; z-index: 9999; }
+
+    .avatar-bubble {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 24px rgba(99,102,241,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .avatar-bubble:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 32px rgba(99,102,241,0.55);
+    }
+    .avatar-bubble svg { width: 28px; height: 28px; fill: white; }
+    .avatar-bubble.active { background: #ef4444; box-shadow: 0 4px 24px rgba(239,68,68,0.4); }
+    .avatar-bubble.active:hover { box-shadow: 0 6px 32px rgba(239,68,68,0.55); }
+
+    .avatar-panel {
+      position: absolute; bottom: 80px; right: 0;
+      width: 360px; height: 480px;
+      border-radius: 20px; overflow: hidden;
+      background: #0a0a0a;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.3);
+      opacity: 0; transform: scale(0.9) translateY(12px);
+      transition: opacity 0.25s, transform 0.25s;
+      pointer-events: none;
+    }
+    .avatar-panel.open {
+      opacity: 1; transform: scale(1) translateY(0);
+      pointer-events: auto;
+    }
+    .avatar-panel .avatar-call-wrapper {
+      width: 100%; height: 100%;
+    }
+    .avatar-panel [data-avatar-call] {
+      width: 100%; height: 100%; border-radius: 0; aspect-ratio: auto;
+    }
+
+    @media (max-width: 480px) {
+      #avatar-root { bottom: 20px; right: 20px; }
+      .avatar-panel { width: calc(100vw - 40px); right: 0; bottom: 76px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><img src="assets/lgo_im_icon-mark.png" alt="" style="height:20px;width:auto;vertical-align:middle;margin-right:8px;opacity:0.9;">Creator Tools Report – 2026</div>
+  <div class="nav-links">
+    <a href="#summary">Summary</a>
+    <a href="#data">Data</a>
+    <a href="#cases">Cases</a>
+    <a href="#solutions">Solutions</a>
+    <a href="#platforms">Platforms</a>
+    <a href="#synthesis">Synthesis</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div>
+        <div class="hero-tag">
+          <div class="hero-tag-dot"></div>
+          <span>March 2026 &nbsp;·&nbsp; Influencer Marketing Industry Deep Research</span>
+        </div>
+        <h1>The Creator<br><span class="hl">Operating System</span></h1>
+        <p class="hero-desc">How Creators Built Their Own Infrastructure</p>
+      </div>
+      <div class="hero-bottom">
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-num"><span class="hl">$252</span><span class="metric-unit">B</span></div>
+            <div class="hero-stat-label">Creator Economy 2025</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-num"><span class="hl">2.3</span><span class="metric-unit">M</span></div>
+            <div class="hero-stat-label">Full-time creators</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-num"><span class="hl">$32.55</span><span class="metric-unit">B</span></div>
+            <div class="hero-stat-label">Influencer spend 2025</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img src="assets/hero.png" alt="Creator lifestyle">
+    </div>
+  </div>
+</div>
+
+<!-- EXECUTIVE SUMMARY -->
+<section class="white" id="summary">
+  <div class="wrap">
+    <div class="section-head fi" style="margin-bottom: 24px;">
+      <div class="label">Executive Summary</div>
+      <h2>Five things you need to know</h2>
+    </div>
+    <div class="key-insight fi">
+      <div class="key-insight-label">Context</div>
+      <p>Influencers are no longer hobbyists – they are solo business operators managing content pipelines, brand partnerships, audience relationships, financial flows, and community infrastructure simultaneously. The social media apps where they publish are only one layer of a multi-tool operational stack. Every major platform is now expanding into adjacent categories — the race to become the single <em>creator OS</em> has begun, but no winner has emerged yet.</p>
+    </div>
+    <div class="insights-list fi">
+      <div class="insight-row">
+        <div class="insight-idx">01</div>
+        <div class="insight-body">
+          <h3>Creator tools exist because social platforms let creators down</h3>
+          <p>Social platforms were built to retain audiences, not to help creators monetize. A creator can be banned overnight, an algorithm update can erase their reach, or the entire platform can disappear – as TikTok nearly did in the US in early 2025. 
+            <br><br>
+            <strong>Every third-party tool is insurance against losing access to your own audience.</strong></p>
+        </div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-idx">02</div>
+        <div class="insight-body">
+          <h3>All-in-one platforms are swallowing the market</h3>
+          <p><a href="https://stan.store" target="_blank" rel="noopener">Stan Store</a> added email. <a href="https://kit.com" target="_blank" rel="noopener">Kit</a> added products. <a href="https://circle.so" target="_blank" rel="noopener">Circle</a> added courses. Every major tool is expanding into adjacent categories. 
+            <br><br>
+            <strong>The race to become a creator's single operating (creator's OS) platform is on – no winner yet.</strong></p>
+        </div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-idx">03</div>
+        <div class="insight-body">
+          <h3>DMs have evolved from audience communication into a primary sales and business development channel</h3>
+          <p>A creator posts <strong>"comment LINK to get my free guide."</strong> You comment. You instantly receive a private message with the link to purchase the guide. That private message is now a sales conversation. <strong>64% of Instagram purchase decisions start exactly this way.</strong> 
+            <br>
+            <br>
+            Tools like ManyChat automated the whole flow – and raised $140M in 2025 doing it.</p>
+        </div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-idx">04</div>
+        <div class="insight-body">
+          <h3>TikTok Shop is making small creators more valuable to brands than big ones</h3>
+          <p>Micro-influencers under 50K followers drive <strong>1,570% more affiliate sales on TikTok vs. Instagram.</strong> Brands are shifting from paying for reach to paying for conversions – and TikTok is where those happen ($66B GMV projected for 2025).</p>
+        </div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-idx">05</div>
+        <div class="insight-body">
+          <h3>Brands have great software. Creators are still using spreadsheets.</h3>
+          <p>Brands have GRIN, CreatorIQ, Aspire. Creators have Notion. <strong>47% of influencer disputes stem from payment delays.</strong> With 2.3M full-time creators managing 5–15 income streams, creator-side financial and deal-tracking tools remain the clearest unsolved opportunity.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARKET DATA -->
+<section class="dark" id="data">
+  <div class="wrap">
+    <div class="section-head on-dark fi">
+      <div class="label on-dark">Market Data</div>
+      <h2>The numbers that define the market</h2>
+      <p>Key metrics across the creator economy and platform ecosystem, 2024–2025.</p>
+    </div>
+    <div class="numbers-takeaway fi">
+      <p>The creator economy grew <strong>23% year-over-year</strong> to $252B in 2025 — and the tooling infrastructure around it is growing just as fast, from DM automation to live commerce to creator-native finance.</p>
+    </div>
+    <div class="numbers-grid fi">
+      <div class="number-cell">
+        <div class="number-cell-val"><span class="hl">$205</span><span class="metric-unit">B</span> <span class="hl">→ $252</span><span class="metric-unit">B</span></div>
+        <div class="number-cell-label">Creator economy market size</div>
+        <div class="number-cell-year">2024 → 2025</div>
+      </div>
+      <div class="number-cell">
+        <div class="number-cell-val"><span class="hl">$1.18</span><span class="metric-unit">T</span></div>
+        <div class="number-cell-label">Projected creator economy size</div>
+        <div class="number-cell-year">2032–2033</div>
+      </div>
+      <div class="number-cell">
+        <div class="number-cell-val"><span class="hl">$24</span><span class="metric-unit">B</span> <span class="hl">→ $32.55</span><span class="metric-unit">B</span></div>
+        <div class="number-cell-label">Influencer marketing spend (+35.6% YoY)</div>
+        <div class="number-cell-year">2024 → 2025</div>
+      </div>
+      <div class="number-cell">
+        <div class="number-cell-val"><span class="hl">91%</span></div>
+        <div class="number-cell-label">Creators now using AI tools</div>
+        <div class="number-cell-year">2024–2025</div>
+      </div>
+      <div class="number-cell">
+        <div class="number-cell-val"><span class="hl">323</span><span class="metric-unit">M</span></div>
+        <div class="number-cell-label">CapCut monthly active users</div>
+        <div class="number-cell-year">July 2024</div>
+      </div>
+      <div class="number-cell">
+        <div class="number-cell-val"><span class="hl">260</span><span class="metric-unit">M</span></div>
+        <div class="number-cell-label">Canva monthly active users</div>
+        <div class="number-cell-year">2025</div>
+      </div>
+      <div class="number-cell">
+        <div class="number-cell-val"><span class="hl">$33.2</span><span class="metric-unit">B</span> <span class="hl">→ $66</span><span class="metric-unit">B</span></div>
+        <div class="number-cell-label">TikTok Shop GMV (202% YoY)</div>
+        <div class="number-cell-year">2024 → 2025</div>
+      </div>
+      <div class="number-cell">
+        <div class="number-cell-val"><span class="hl">$140</span><span class="metric-unit">M</span></div>
+        <div class="number-cell-label">ManyChat funding raised – 1M+ users</div>
+        <div class="number-cell-year">April 2025</div>
+      </div>
+      <div class="number-cell">
+        <div class="number-cell-val"><span class="hl">$4.1</span><span class="metric-unit">B</span> <span class="hl">→ $5.7</span><span class="metric-unit">B</span></div>
+        <div class="number-cell-label">TikTok total creator payouts</div>
+        <div class="number-cell-year">2024 → 2025</div>
+      </div>
+      <div class="number-cell">
+        <div class="number-cell-val"><span class="hl">4</span><span class="metric-unit">M</span></div>
+        <div class="number-cell-label">Substack paid subscriptions</div>
+        <div class="number-cell-year">2024–2025</div>
+      </div>
+      <div class="number-cell">
+        <div class="number-cell-val"><span class="hl">$179</span><span class="metric-unit">M</span></div>
+        <div class="number-cell-label">Patreon annual revenue (+28% YoY)</div>
+        <div class="number-cell-year">2025</div>
+      </div>
+      <div class="number-cell">
+        <div class="number-cell-val"><span class="hl">$78</span><span class="metric-unit">M</span></div>
+        <div class="number-cell-label">CreatorIQ acquisition of HypeAuditor</div>
+        <div class="number-cell-year">April 2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section class="white" id="cases">
+  <div class="wrap">
+    <div class="section-head fi">
+      <div class="label">Real-World Examples</div>
+      <h2>Five cases that changed the game</h2>
+      <p>How creators and platforms put these tools to work – with measurable outcomes.</p>
+    </div>
+    <div class="cases-grid fi">
+
+      <!-- Case 01 -->
+      <div class="case-item">
+        <div class="case-img">
+          <img src="assets/many-chats.png" alt="ManyChat DM flow in action">
+        </div>
+        <div class="case-content">
+          <div class="case-meta">
+            <span class="case-num">Case 01</span>
+            <span class="case-platforms">Instagram · TikTok · Facebook</span>
+          </div>
+          <h3>ManyChat + Creator Commerce Pipeline</h3>
+          <p>Creators posting Reels prompt viewers: <em>"Comment [KEYWORD] and I'll DM you the link."</em> ManyChat automatically fires the DM with the product link the moment a viewer comments.</p>
+          <p><strong>Why it works:</strong> It simultaneously boosts comment engagement, triggers wider distribution, and converts passive viewers into a private sales conversation. <strong>64% of purchase decisions on Instagram start with a DM.</strong> ManyChat raised $140M in April 2025.</p>
+          <span class="case-pill">3–10× conversions</span>
+        </div>
+      </div>
+
+      <!-- Case 02 -->
+      <div class="case-item">
+        <div class="case-img">
+          <img src="assets/stan-store-1.png" alt="Stan Store storefront UI">
+        </div>
+        <div class="case-content">
+          <div class="case-meta">
+            <span class="case-num">Case 02</span>
+            <span class="case-platforms">Instagram · TikTok → Stan Store</span>
+          </div>
+          <h3>Stan Store – Bio Link to First $1,000</h3>
+          <p>Creators replace Linktree with Stan Store, converting a single bio link into a full digital storefront selling presets, courses, templates, and coaching sessions. One-click checkout removes every friction point between discovery and purchase.</p>
+          <p><strong>Why it works:</strong> One URL collapses a 4-tool stack. <strong>$29/month flat fee with 0% transaction fees</strong> – creators keep significantly more margin than competitors charging 5–10%.</p>
+          <span class="case-pill">11K creators hit $1K</span>
+        </div>
+      </div>
+
+      <!-- Case 03 -->
+      <div class="case-item">
+        <div class="case-img">
+          <img src="assets/mighty-3.png" alt="Mighty Networks app experience">
+        </div>
+        <div class="case-content">
+          <div class="case-meta">
+            <span class="case-num">Case 03</span>
+            <span class="case-platforms">Mighty Pro</span>
+          </div>
+          <h3>Marie Forleo – Mighty Pro for Premium Paid Community</h3>
+          <p>Online educator Marie Forleo migrated her B-School program to Mighty Pro (white-label app tier of Mighty Networks), creating a branded native mobile app for her paid community.</p>
+          <p><strong>Why it works:</strong> Courses with integrated community features increase completion rates by <strong>40–60%</strong> vs. standalone courses. The native app creates identity – members feel part of an exclusive cohort, not just enrolled in a course.</p>
+          <span class="case-pill">7-figure launch</span>
+        </div>
+      </div>
+
+      <!-- Case 04 -->
+      <div class="case-item">
+        <div class="case-img">
+          <img src="assets/tiktok_live.jpg" alt="TikTok LIVE commerce session">
+        </div>
+        <div class="case-content">
+          <div class="case-meta">
+            <span class="case-num">Case 04</span>
+            <span class="case-platforms">TikTok LIVE + TikTok Shop</span>
+          </div>
+          <h3>TikTok LIVE Commerce – $2.1M in a Single Stream</h3>
+          <p>A top TikTok LIVE creator combined product showcasing with live virtual gifts and TikTok Shop affiliate links during a single 14-hour stream – generating $2.1 million.</p>
+          <p><strong>Why it works:</strong> Virtual gifts lower the conversion threshold, live urgency creates FOMO, and the creator's personal presence drives trust. <strong>The highest-conversion commerce format in social media history.</strong></p>
+          <span class="case-pill">$2.1M in 14 hours</span>
+        </div>
+      </div>
+
+      <!-- Case 05 -->
+      <div class="case-item">
+        <div class="case-img">
+          <img src="assets/hype_auditor.png" alt="HypeAuditor analytics dashboard">
+        </div>
+        <div class="case-content">
+          <div class="case-meta">
+            <span class="case-num">Case 05</span>
+            <span class="case-platforms">Enterprise SaaS</span>
+          </div>
+          <h3>CreatorIQ Acquires HypeAuditor – The Analytics Consolidation Play</h3>
+          <p>Enterprise creator marketing platform CreatorIQ acquired HypeAuditor (fake follower detection & audience analytics) in April 2025 for $78 million.</p>
+          <p><strong>Why it worked:</strong> Creators need proof of audience quality to command higher rates; brands need it before allocating budget. <strong>86% of brands now use analytics tools.</strong> One acquisition eliminated the friction of two separate workflows.</p>
+          <span class="case-pill">220M+ profiles</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTIONS -->
+<section class="off" id="solutions">
+  <div class="wrap">
+    <div class="section-head fi">
+      <div class="label">Solutions in the Industry</div>
+      <h2>The creator tool landscape</h2>
+      <p>Ten categories, the leading tools, and the gaps that still need solving.</p>
+    </div>
+
+    <!-- D1 VIDEO -->
+    <div class="cat-block fi">
+      <div class="cat-header">
+        <div class="cat-num">Video Editing</div>
+        <div class="cat-line"></div>
+      </div>
+      <div class="tools-row">
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=capcut.com&sz=64" alt="CapCut">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://capcut.com" target="_blank" rel="noopener">CapCut<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">ByteDance · Mobile-first short-form video editor with AI features</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">Freemium</span><span class="pe-price">Premium AI tier</span></div>
+          </div>
+          <div class="pe-body">
+            <div class="pe-imgs imgs-2">
+              <div class="pe-img"><img src="assets/capcut1.jpeg" alt="CapCut editor"></div>
+              <div class="pe-img"><img src="assets/capcut2.jpg" alt="CapCut templates"></div>
+            </div>
+            <div class="pe-info">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>81% mobile video editing share</li><li>Zero learning curve</li><li>Real-time trend templates</li><li>Auto-captions, BG removal</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>US ban effective Jan 19, 2025</li><li>ByteDance geopolitical risk</li><li>No US replacement at scale</li></ul></div>
+              </div>
+              <div class="integrations"><div class="int-label">Key Integrations</div><div class="int-tags"><span class="itag">TikTok</span><span class="itag">Instagram Reels</span><span class="itag">YouTube Shorts</span><span class="itag">Dreamina AI</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=descript.com&sz=64" alt="Descript">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://descript.com" target="_blank" rel="noopener">Descript<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">Transcript-based video editing – edit video by editing text</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">Free</span><span class="pe-price">$24/mo</span><span class="pe-price">$40/mo per user</span></div>
+          </div>
+          <div class="pe-body">
+            <div class="pe-imgs imgs-2">
+              <div class="pe-img"><img src="assets/descript1.jpeg" alt="Descript transcript editor"></div>
+              <div class="pe-img"><img src="assets/descript2.png" alt="Descript studio"></div>
+            </div>
+            <div class="pe-info">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>Edit video like a Word doc</li><li>AI filler word removal</li><li>Eye contact correction</li><li>Best for talking-head content</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>Not for high-motion video</li><li>Niche use case</li><li>Learning curve for editors</li></ul></div>
+              </div>
+              <div class="integrations"><div class="int-label">Key Integrations</div><div class="int-tags"><span class="itag">YouTube</span><span class="itag">Adobe Premiere</span><span class="itag">Final Cut Pro</span><span class="itag">Buzzsprout</span><span class="itag">Zapier</span></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- D2 DESIGN -->
+    <div class="cat-block fi">
+      <div class="cat-header">
+        <div class="cat-num">Graphic Design</div>
+        <div class="cat-line"></div>
+      </div>
+      <div class="tools-row">
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=canva.com&sz=64" alt="Canva">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://canva.com" target="_blank" rel="noopener">Canva<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">The tool that eliminated the graphic design retainer for 95% of creators</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">Free</span><span class="pe-price">~$15/mo Pro</span><span class="pe-price">$3.5B revenue 2025</span></div>
+          </div>
+          <div class="pe-body">
+            <div class="pe-imgs imgs-2">
+              <div class="pe-img"><img src="assets/canva1.webp" alt="Canva design editor"></div>
+              <div class="pe-img"><img src="assets/canva2.jpg" alt="Canva templates"></div>
+            </div>
+            <div class="pe-info">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>260M monthly users</li><li>38.5M designs/day</li><li>Brand kit for identity</li><li>Magic Design AI</li><li>Direct social scheduling</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>Output is recognizably "Canva"</li><li>Not for motion design</li><li>Heavy customization needed</li></ul></div>
+              </div>
+              <div class="integrations"><div class="int-label">Key Integrations</div><div class="int-tags"><span class="itag">Google Drive</span><span class="itag">Dropbox</span><span class="itag">Slack</span><span class="itag">HubSpot</span><span class="itag">Instagram</span><span class="itag">Buffer</span><span class="itag">Mailchimp</span><span class="itag">100+ apps</span></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- D3 SCHEDULING -->
+    <div class="cat-block fi">
+      <div class="cat-header">
+        <div class="cat-num">Content Scheduling</div>
+        <div class="cat-line"></div>
+      </div>
+      <div class="tools-row">
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=buffer.com&sz=64" alt="Buffer">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://buffer.com" target="_blank" rel="noopener">Buffer<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">Multi-platform scheduling for solo creators on a budget</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">Free (3 channels)</span><span class="pe-price">From $5/mo per channel</span></div>
+          </div>
+          <div class="pe-body">
+            <div class="pe-imgs imgs-2">
+              <div class="pe-img"><img src="assets/buffer1.webp" alt="Buffer queue"></div>
+              <div class="pe-img"><img src="assets/buffer2.png" alt="Buffer analytics"></div>
+            </div>
+            <div class="pe-info">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>Lowest price entry point</li><li>Clean UX</li><li>7 major platforms</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>Shallow analytics</li><li>Limited team features</li><li>Not for enterprise</li></ul></div>
+              </div>
+              <div class="integrations"><div class="int-label">Key Integrations</div><div class="int-tags"><span class="itag">Instagram</span><span class="itag">TikTok</span><span class="itag">YouTube</span><span class="itag">LinkedIn</span><span class="itag">Threads</span><span class="itag">Bluesky</span><span class="itag">Canva</span><span class="itag">Zapier</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=later.com&sz=64" alt="Later">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://later.com" target="_blank" rel="noopener">Later<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">Visual-first content calendar – built for Instagram grid thinkers</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">Freemium</span><span class="pe-price">From ~$18/mo</span></div>
+          </div>
+          <div class="pe-body">
+            <div class="pe-imgs imgs-2">
+              <div class="pe-img"><img src="assets/later1.png" alt="Later visual calendar"></div>
+              <div class="pe-img"><img src="assets/later2.jpg" alt="Later scheduling"></div>
+            </div>
+            <div class="pe-info">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>Drag-and-drop visual grid</li><li>Strong for fashion/lifestyle</li><li>Shopify shoppable posts</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>Less competitive for text-heavy publishers</li><li>Multi-platform less robust</li></ul></div>
+              </div>
+              <div class="integrations"><div class="int-label">Key Integrations</div><div class="int-tags"><span class="itag">Instagram</span><span class="itag">TikTok</span><span class="itag">Pinterest</span><span class="itag">Shopify</span><span class="itag">Canva</span><span class="itag">Adobe</span><span class="itag">Zapier</span></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="alert shift fi">
+        <strong>Key market shift 2024–2025:</strong> Hootsuite raised all plans to $199/month minimum, abandoning solo creators entirely. Platform-native scheduling (Instagram, TikTok, YouTube all now offer it) is absorbing simple use cases. The market is bifurcating: enterprise tools going upmarket, solo creators on native tools or ultra-low-cost options.
+      </div>
+    </div>
+
+    <!-- D4 MONETIZATION -->
+    <div class="cat-block fi">
+      <div class="cat-header">
+        <div class="cat-num">Monetization Platforms</div>
+        <div class="cat-line"></div>
+      </div>
+      <div class="tools-row">
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=patreon.com&sz=64" alt="Patreon">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://patreon.com" target="_blank" rel="noopener">Patreon<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">The original membership platform. $179M revenue, +28% YoY</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">8–10% blended take rate</span></div>
+          </div>
+          <div class="pe-body">
+            <div class="pe-imgs imgs-1">
+              <div class="pe-img"><img src="assets/patreon1.jpg" alt="Patreon membership page"></div>
+            </div>
+            <div class="pe-info">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>Established creator trust</li><li>Deep membership infrastructure</li><li>Tiered access control</li><li>Recognized brand name</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>High take rate vs. competitors</li><li>Dated UI</li><li>Weak community features</li><li>Limited storefront</li></ul></div>
+              </div>
+              <div class="integrations"><div class="int-label">Key Integrations</div><div class="int-tags"><span class="itag">Discord</span><span class="itag">Spotify</span><span class="itag">Apple Podcasts</span><span class="itag">Stripe</span><span class="itag">PayPal</span><span class="itag">Zapier</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=substack.com&sz=64" alt="Substack">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://substack.com" target="_blank" rel="noopener">Substack<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">Write → readers pay → Substack handles everything. 4M paid subscriptions.</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">10% revenue cut</span><span class="pe-price">No monthly fee</span></div>
+          </div>
+          <div class="pe-body">
+            <div class="pe-imgs imgs-1">
+              <div class="pe-img"><img src="assets/sbstack1.png" alt="Substack newsletter"></div>
+            </div>
+            <div class="pe-info">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>Zero technical setup</li><li>Growing social graph (Notes)</li><li>Strong SEO</li><li>Network recommendation effects</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>10% expensive at scale</li><li>Text-focused only</li><li>No API / Zapier support</li></ul></div>
+              </div>
+              <div class="integrations"><div class="int-label">Key Integrations</div><div class="int-tags"><span class="itag">Stripe</span><span class="itag">Apple Podcasts</span><span class="itag">Spotify</span><span class="itag">Medium import</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=kit.com&sz=64" alt="Kit">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://kit.com" target="_blank" rel="noopener">Kit (ConvertKit)<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">Email-first creator OS: email + digital products + newsletter ad marketplace</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">Free to 1K subs</span><span class="pe-price">3.5% transaction fee</span></div>
+          </div>
+          <div class="pe-body">
+            <div class="pe-imgs imgs-2">
+              <div class="pe-img"><img src="assets/kit1.avif" alt="Kit email dashboard"></div>
+              <div class="pe-img"><img src="assets/kit2.jpg" alt="Kit automation"></div>
+            </div>
+            <div class="pe-info">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>Lowest transaction fee (3.5%)</li><li>Creator-specific design</li><li>Powerful audience segmentation</li><li>Newsletter ad marketplace</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>Expensive at large lists</li><li>Design tools weaker than Beehiiv</li></ul></div>
+              </div>
+              <div class="integrations"><div class="int-label">Key Integrations</div><div class="int-tags"><span class="itag">Shopify</span><span class="itag">Kajabi</span><span class="itag">Circle</span><span class="itag">Teachable</span><span class="itag">Patreon</span><span class="itag">Webflow</span><span class="itag">Zapier</span><span class="itag">100+</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=kajabi.com&sz=64" alt="Kajabi">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://kajabi.com" target="_blank" rel="noopener">Kajabi<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">All-in-one: courses + memberships + coaching + email + payments</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">$149–$399/mo</span><span class="pe-price">0% transaction fees</span></div>
+          </div>
+          <div class="pe-body">
+            <div class="pe-imgs imgs-2">
+              <div class="pe-img"><img src="assets/kajabi-2.avif" alt="Kajabi dashboard"></div>
+              <div class="pe-img"><img src="assets/kajabi-3.avif" alt="Kajabi course builder"></div>
+            </div>
+            <div class="pe-info">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>Best student/member experience</li><li>Eliminates 6-tool stack</li><li>Best automation in category</li><li>0% transaction fees</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>High floor price</li><li>Over-engineered for early-stage</li><li>Requires existing revenue</li></ul></div>
+              </div>
+              <div class="integrations"><div class="int-label">Key Integrations</div><div class="int-tags"><span class="itag">Stripe</span><span class="itag">PayPal</span><span class="itag">Mailchimp</span><span class="itag">Facebook Pixel</span><span class="itag">Zapier</span><span class="itag">ManyChat</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=gumroad.com&sz=64" alt="Gumroad">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://gumroad.com" target="_blank" rel="noopener">Gumroad<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">Fastest path from idea to selling a digital product. Zero setup required.</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">10% transaction fee</span><span class="pe-price">No monthly cost</span></div>
+          </div>
+          <div class="pe-body">
+            <div class="pe-imgs imgs-2">
+              <div class="pe-img"><img src="assets/gumroad.png" alt="Gumroad storefront"></div>
+              <div class="pe-img"><img src="assets/gumroad1.png" alt="Gumroad product page"></div>
+            </div>
+            <div class="pe-info">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>Zero upfront cost</li><li>International payments + VAT</li><li>Fastest time-to-sale</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>10% expensive at scale</li><li>No community / membership</li><li>Limited customization</li></ul></div>
+              </div>
+              <div class="integrations"><div class="int-label">Key Integrations</div><div class="int-tags"><span class="itag">Zapier</span><span class="itag">Mailchimp</span><span class="itag">Discord</span><span class="itag">Webhooks</span></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- D5 LINK-IN-BIO -->
+    <div class="cat-block fi">
+      <div class="cat-header">
+        <div class="cat-num">Link-in-Bio / Creator Storefronts</div>
+        <div class="cat-line"></div>
+      </div>
+      <div class="tools-row">
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=linktr.ee&sz=64" alt="Linktree">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://linktr.ee" target="_blank" rel="noopener">Linktree<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">The original link-in-bio. Universal audience recognition.</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">Free</span><span class="pe-price">Pro ~$9/mo</span></div>
+          </div>
+          <div class="pe-body">
+            <div class="pe-imgs imgs-1">
+              <div class="pe-img"><img src="assets/linktree.png" alt="Linktree profile page"></div>
+            </div>
+            <div class="pe-info">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>Brand recognition</li><li>Simple setup</li><li>70+ music integrations</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>Fundamentally a link list</li><li>Limited built-in monetization</li><li>Competitors offer far more</li></ul></div>
+              </div>
+              <div class="integrations"><div class="int-label">Key Integrations</div><div class="int-tags"><span class="itag">Shopify</span><span class="itag">Spring (merch)</span><span class="itag">PayPal</span><span class="itag">Mailchimp</span><span class="itag">TikTok</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=stan.store&sz=64" alt="Stan Store">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://stan.store" target="_blank" rel="noopener">Stan Store<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">Conversion-optimized storefront – 11K creators hit $1K in 2024</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">$29/mo flat</span><span class="pe-price">0% transaction fees</span></div>
+          </div>
+          <div class="pe-body">
+            <div class="pe-imgs imgs-3">
+              <div class="pe-img"><img src="assets/stan-store-1.png" alt="Stan Store homepage"></div>
+              <div class="pe-img"><img src="assets/stan-store-2.png" alt="Stan Store product page"></div>
+              <div class="pe-img"><img src="assets/stan-store-3.png" alt="Stan Store checkout"></div>
+            </div>
+            <div class="pe-info">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>Best conversion rates</li><li>0% fees at any scale</li><li>Collapses 4-tool stack</li><li>AutoDM built-in</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>Less flexible than custom stack</li><li>Primarily digital products</li><li>No physical goods</li></ul></div>
+              </div>
+              <div class="integrations"><div class="int-label">Key Integrations</div><div class="int-tags"><span class="itag">Stripe</span><span class="itag">Zapier</span><span class="itag">Mailchimp</span><span class="itag">Kajabi</span><span class="itag">Skool</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=beacons.ai&sz=64" alt="Beacons.ai">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://beacons.ai" target="_blank" rel="noopener">Beacons.ai<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">AI-driven hub: link-in-bio + store + brand deal CRM + media kit generator</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">Free</span><span class="pe-price">From $8/mo</span><span class="pe-price">9% free / 0% paid</span></div>
+          </div>
+          <div class="pe-body">
+            <div class="pe-imgs imgs-1">
+              <div class="pe-img"><img src="assets/beacon.jpg" alt="Beacons creator hub"></div>
+            </div>
+            <div class="pe-info">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>Most category breadth</li><li>AI media kit generation</li><li>Brand deal CRM built-in</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>Breadth vs. depth trade-off</li><li>Each feature less deep than specialists</li></ul></div>
+              </div>
+              <div class="integrations"><div class="int-label">Key Integrations</div><div class="int-tags"><span class="itag">TikTok Shop</span><span class="itag">Shopify</span><span class="itag">Etsy</span><span class="itag">Gumroad</span><span class="itag">Stripe</span></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="alert shift fi">
+        <strong>Category convergence:</strong> The link-in-bio category is merging with digital storefronts. A creator's bio link is now expected to accept payments and capture emails – not just route traffic elsewhere.
+      </div>
+    </div>
+
+    <!-- D6 ANALYTICS -->
+    <div class="cat-block fi">
+      <div class="cat-header">
+        <div class="cat-num">Analytics</div>
+        <div class="cat-line"></div>
+      </div>
+      <div class="tools-row">
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=tubebuddy.com&sz=64" alt="TubeBuddy">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://tubebuddy.com" target="_blank" rel="noopener">TubeBuddy<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">YouTube-only browser extension: SEO, A/B thumbnail testing, tag research</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">Free</span><span class="pe-price">$4.50–$49/mo</span></div>
+          </div>
+          <div class="pe-body no-img">
+            <div class="pe-info-no-img">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>Deepest YouTube SEO tooling</li><li>Thumbnail CTR A/B testing</li><li>Native YouTube Studio layer</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>Single platform only</li><li>No value outside YouTube</li></ul></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=metricool.com&sz=64" alt="Metricool">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://metricool.com" target="_blank" rel="noopener">Metricool<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">Cross-platform analytics + scheduling for 12+ networks in one dashboard</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">Free</span><span class="pe-price">From $22/mo</span></div>
+          </div>
+          <div class="pe-body">
+            <div class="pe-imgs imgs-1">
+              <div class="pe-img"><img src="assets/metricool.png" alt="Metricool dashboard"></div>
+            </div>
+            <div class="pe-info">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>Competitive analysis on any public account</li><li>Best-time AI recommendations</li><li>Cross-platform comparison</li><li>MCP-compatible (Claude, ChatGPT)</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>Analytics depth below platform-native</li><li>Not for managing 1000s of creators</li></ul></div>
+              </div>
+              <div class="integrations"><div class="int-label">Key Integrations</div><div class="int-tags"><span class="itag">Instagram</span><span class="itag">TikTok</span><span class="itag">YouTube</span><span class="itag">LinkedIn</span><span class="itag">Shopify</span><span class="itag">Looker Studio</span><span class="itag">Zapier</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=hypeauditor.com&sz=64" alt="HypeAuditor">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://hypeauditor.com" target="_blank" rel="noopener">HypeAuditor (now CreatorIQ)<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">Audience quality analytics + fake follower detection. 220M+ creator profiles.</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">Enterprise SaaS</span><span class="pe-price">~$399+/mo</span></div>
+          </div>
+          <div class="pe-body">
+            <div class="pe-imgs imgs-1">
+              <div class="pe-img"><img src="assets/hype_auditor.png" alt="HypeAuditor analytics"></div>
+            </div>
+            <div class="pe-info">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>35+ audience quality metrics</li><li>Algorithms in 40 languages</li><li>Brand-side gold standard</li><li>Acquired for $78M April 2025</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>Price targets brands, not creators</li><li>Consolidation moves it further upmarket</li></ul></div>
+              </div>
+              <div class="integrations"><div class="int-label">Key Integrations</div><div class="int-tags"><span class="itag">Salesforce</span><span class="itag">HubSpot</span><span class="itag">Shopify</span><span class="itag">Google Analytics</span><span class="itag">DocuSign</span></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="alert gap fi">
+        <strong>Key gap:</strong> No strong, affordable, creator-side analytics tool provides cross-platform performance benchmarking + competitor analysis + brand deal reporting at a price accessible to micro-influencers. This is an open market opportunity.
+      </div>
+    </div>
+
+    <!-- D7 BRAND DEALS -->
+    <div class="cat-block fi">
+      <div class="cat-header">
+        <div class="cat-num">Brand Deal & Sponsorship Management</div>
+        <div class="cat-line"></div>
+      </div>
+      <div class="tools-row">
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=grin.co&sz=64" alt="GRIN">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://grin.co" target="_blank" rel="noopener">GRIN<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">Full creator CRM for brands: email, shipments, affiliates, contracts, briefs</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">~$999+/mo</span><span class="pe-price">$12M Series B</span></div>
+          </div>
+          <div class="pe-body no-img">
+            <div class="pe-info-no-img">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>Best brand-side creator CRM</li><li>Strong Shopify integration</li><li>Tracks gifted + paid campaigns</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>Priced for brands only</li><li>No tool for creator's own side</li></ul></div>
+              </div>
+              <div class="integrations"><div class="int-label">Key Integrations</div><div class="int-tags"><span class="itag">Shopify</span><span class="itag">Salesforce</span><span class="itag">Gmail</span><span class="itag">DocuSign</span><span class="itag">Slack</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=aspire.io&sz=64" alt="Aspire">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://aspire.io" target="_blank" rel="noopener">Aspire (AspireIQ)<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">Creator marketplace with 1M+ profiles + CRM. Brands post briefs, creators apply.</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">Platform fee</span><span class="pe-price">SaaS subscription</span></div>
+          </div>
+          <div class="pe-body no-img">
+            <div class="pe-info-no-img">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>Discovery + management in one</li><li>1M+ creator database</li><li>Shopify strategic partnership 2024</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>Still brand-facing, not creator-native</li></ul></div>
+              </div>
+              <div class="integrations"><div class="int-label">Key Integrations</div><div class="int-tags"><span class="itag">TikTok</span><span class="itag">Instagram</span><span class="itag">Shopify</span><span class="itag">PayPal</span><span class="itag">Klaviyo</span></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="alert gap fi">
+        <strong>Critical finding – creator-side gap:</strong> 47% of influencer disputes stem from payment delays or misunderstandings. Yet no creator-native CRM dominates this space. Most professional creators manage brand deals with Notion, Google Sheets, or freelancer tools like HoneyBook. The creator-side brand deal management category is structurally underdeveloped relative to the brand-side market.
+      </div>
+    </div>
+
+    <!-- D8 DM AUTOMATION -->
+    <div class="cat-block fi">
+      <div class="cat-header">
+        <div class="cat-num">DM Automation</div>
+        <div class="cat-line"></div>
+      </div>
+      <div class="tools-row">
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=manychat.com&sz=64" alt="ManyChat">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://manychat.com" target="_blank" rel="noopener">ManyChat<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">Chat marketing for Instagram, Facebook, WhatsApp. The dominant brand in the category.</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">Free to 1K contacts</span><span class="pe-price">From $15/mo</span><span class="pe-price">1M+ users</span></div>
+          </div>
+          <div class="pe-body">
+            <div class="pe-imgs imgs-1">
+              <div class="pe-img"><img src="assets/many-chats.png" alt="ManyChat flow builder"></div>
+            </div>
+            <div class="pe-info">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>Deepest Meta integration</li><li>Best flow-building UI</li><li>Official Meta Business Partner</li><li>$140M raised (April 2025)</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>Scales expensive with contact count</li><li>Complex vs. alternatives</li></ul></div>
+              </div>
+              <div class="integrations"><div class="int-label">Key Integrations</div><div class="int-tags"><span class="itag">Instagram</span><span class="itag">WhatsApp</span><span class="itag">TikTok DMs (Beta)</span><span class="itag">Shopify</span><span class="itag">HubSpot</span><span class="itag">Zapier</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <div class="pe-name-group">
+              <div class="pe-name">Flat-rate alternatives</div>
+              <div class="pe-sub">Competitors targeting ManyChat's contact-based pricing weakness – CreatorFlow, LinkDM, InstantDM</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">$8–$29/mo flat</span></div>
+          </div>
+          <div class="pe-body no-img">
+            <div class="pe-info-no-img">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Options</div><ul><li>CreatorFlow $15–29/month flat</li><li>LinkDM $19/month flat</li><li>InstantDM $8/month flat</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>Less established</li><li>Smaller feature sets</li><li>Less Meta integration depth</li></ul></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="alert shift fi">
+        <strong>Why this category is exploding:</strong> Meta data shows 64% of Instagram purchase decisions start with a DM. The comment-to-DM mechanic simultaneously boosts algorithmic distribution, generates leads, and initiates sales – three outcomes from one tactic.
+      </div>
+    </div>
+
+    <!-- D9 COMMUNITY -->
+    <div class="cat-block fi">
+      <div class="cat-header">
+        <div class="cat-num">Community Platforms</div>
+        <div class="cat-line"></div>
+      </div>
+      <div class="tools-row">
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=discord.com&sz=64" alt="Discord">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://discord.com" target="_blank" rel="noopener">Discord<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">Real-time chat + voice. Free to host any size. Rich bot ecosystem.</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">Free for hosts</span><span class="pe-price">Nitro from users</span></div>
+          </div>
+          <div class="pe-body no-img">
+            <div class="pe-info-no-img">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>Massive existing user base</li><li>Free entry point</li><li>Strong for gaming/tech/crypto</li><li>Rich bot ecosystem</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>No meaningful paid monetization</li><li>Content degrades at scale</li><li>Not a course platform</li></ul></div>
+              </div>
+              <div class="integrations"><div class="int-label">Key Integrations</div><div class="int-tags"><span class="itag">Twitch</span><span class="itag">YouTube</span><span class="itag">Patreon</span><span class="itag">Spotify</span><span class="itag">Zapier</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=mightynetworks.com&sz=64" alt="Mighty Networks">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://mightynetworks.com" target="_blank" rel="noopener">Mighty Networks<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">Courses + community + live events + white-label native apps</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">From $41/mo</span><span class="pe-price">Mighty Pro: custom native app</span></div>
+          </div>
+          <div class="pe-body">
+            <div class="pe-imgs imgs-3">
+              <div class="pe-img"><img src="assets/mighty.png" alt="Mighty Networks home"></div>
+              <div class="pe-img"><img src="assets/mighty-2.png" alt="Mighty Networks community"></div>
+              <div class="pe-img"><img src="assets/mighty-3.png" alt="Mighty Networks mobile app"></div>
+            </div>
+            <div class="pe-info">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>Native mobile app option</li><li>Full course + community integration</li><li>Marie Forleo 7-figure launch</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>Complex for early-stage creators</li><li>Mighty Pro requires investment</li></ul></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=circle.so&sz=64" alt="Circle">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://circle.so" target="_blank" rel="noopener">Circle<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">Purpose-built paid community: courses + spaces + live events + streams</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">From $89/mo</span><span class="pe-price">0% tx fees on memberships</span></div>
+          </div>
+          <div class="pe-body no-img">
+            <div class="pe-info-no-img">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>Best content organization</li><li>30+ product releases/quarter</li><li>Course + community integration</li><li>White-label options</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>Higher cost than Discord</li><li>Less casual creator recognition</li></ul></div>
+              </div>
+              <div class="integrations"><div class="int-label">Key Integrations</div><div class="int-tags"><span class="itag">Zapier</span><span class="itag">Kajabi</span><span class="itag">Teachable</span><span class="itag">Auth0</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=skool.com&sz=64" alt="Skool">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://skool.com" target="_blank" rel="noopener">Skool<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">Community + course + gamification. Hormozi's investment drove mainstream adoption.</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">$99/mo flat</span><span class="pe-price">2.9% tx fee on paid communities</span></div>
+          </div>
+          <div class="pe-body">
+            <div class="pe-imgs imgs-2">
+              <div class="pe-img"><img src="assets/skool.png" alt="Skool community feed"></div>
+              <div class="pe-img"><img src="assets/skool-2.png" alt="Skool leaderboard"></div>
+            </div>
+            <div class="pe-info">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>Gamification drives participation</li><li>Cleaner UX than Circle</li><li>Flat predictable pricing</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>Limited customization</li><li>Smaller integration ecosystem</li></ul></div>
+              </div>
+              <div class="integrations"><div class="int-label">Key Integrations</div><div class="int-tags"><span class="itag">Stripe</span><span class="itag">Zapier</span><span class="itag">Stan Store</span><span class="itag">Kajabi</span></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="alert shift fi">
+        <strong>Key insight:</strong> Communities with course integration show 40–60% higher course completion rates vs. standalone courses. 67% of community members cite shared identity and values – not algorithmic content – as their reason for staying.
+      </div>
+    </div>
+
+    <!-- D10 FINANCIAL -->
+    <div class="cat-block fi">
+      <div class="cat-header">
+        <div class="cat-num">Financial Management</div>
+        <div class="cat-line"></div>
+      </div>
+      <div class="tools-row">
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="assets/milx-logo.png" alt="MilX">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://milx.io" target="_blank" rel="noopener">MilX<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">Finance hub built specifically for creators. Multi-source income aggregation.</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">Free</span><span class="pe-price">No subscription fees</span></div>
+          </div>
+          <div class="pe-body">
+            <div class="pe-imgs imgs-3">
+              <div class="pe-img"><img src="assets/milx.png" alt="MilX dashboard"></div>
+              <div class="pe-img"><img src="assets/milx-2.png" alt="MilX income streams"></div>
+              <div class="pe-img"><img src="assets/milx-3.png" alt="MilX payments"></div>
+            </div>
+            <div class="pe-info">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>Creator-native design</li><li>Multi-source aggregation</li><li>Advance payments on future content</li><li>40+ currencies, crypto</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>Newer, smaller platform</li><li>Limited bookkeeping depth</li></ul></div>
+              </div>
+              <div class="integrations"><div class="int-label">Key Integrations</div><div class="int-tags"><span class="itag">YouTube API</span><span class="itag">TikTok API</span><span class="itag">PayPal</span><span class="itag">USDT/BTC</span><span class="itag">40+ currencies</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=quickbooks.intuit.com&sz=64" alt="QuickBooks">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://quickbooks.intuit.com" target="_blank" rel="noopener">QuickBooks Self-Employed<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">Standard for creators earning $50K+ needing quarterly tax management</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">$15–$30/mo</span></div>
+          </div>
+          <div class="pe-body">
+            <div class="pe-imgs imgs-2">
+              <div class="pe-img"><img src="assets/QuickBooks-Self-Employed.png" alt="QuickBooks Self-Employed dashboard"></div>
+              <div class="pe-img"><img src="assets/QuickBooks-Self-Employed-2.png" alt="QuickBooks expense tracking"></div>
+            </div>
+            <div class="pe-info">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>Quarterly tax estimation</li><li>Proven bookkeeping at scale</li><li>800+ Zapier integrations</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>Built for freelancers, not creators</li><li>No multi-platform income aggregation</li></ul></div>
+              </div>
+              <div class="integrations"><div class="int-label">Key Integrations</div><div class="int-tags"><span class="itag">Shopify</span><span class="itag">Stripe</span><span class="itag">PayPal</span><span class="itag">Gusto</span><span class="itag">Wise</span><span class="itag">Zapier</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="platform-entry">
+          <div class="pe-header">
+            <img class="pe-logo" src="https://www.google.com/s2/favicons?domain=waveapps.com&sz=64" alt="Wave">
+            <div class="pe-name-group">
+              <a class="pe-name-link" href="https://waveapps.com" target="_blank" rel="noopener">Wave<svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:5px;opacity:0.45;vertical-align:middle;flex-shrink:0"><path d="M10 2L2 10M10 2H6M10 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <div class="pe-sub">Free accounting, invoicing, expense tracking for early-stage creators</div>
+            </div>
+            <div class="pe-prices"><span class="pe-price">Free</span><span class="pe-price">Paid payroll add-ons</span></div>
+          </div>
+          <div class="pe-body no-img">
+            <div class="pe-info-no-img">
+              <div class="sw">
+                <div class="sw-col"><div class="sw-head s">Strengths</div><ul><li>Completely free</li><li>Solid for $0–$50K/year</li><li>Clean invoicing UI</li></ul></div>
+                <div class="sw-col"><div class="sw-head w">Weaknesses</div><ul><li>No creator-specific features</li><li>Limited automation</li></ul></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="alert gap fi">
+        <strong>The largest structural gap in the entire creator stack:</strong> 2.3 million full-time creators each managing 5–15 income streams, quarterly estimated taxes, international payments, and deductible expense tracking – and the best product most use is QuickBooks Self-Employed, which was built for freelancers. No product handles multi-platform income aggregation + invoicing + tax estimation + bookkeeping natively for creators.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PLATFORM FEATURES -->
+<section class="dark" id="platforms">
+  <div class="wrap">
+    <div class="section-head on-dark fi">
+      <div class="label on-dark">Platform Intelligence</div>
+      <h2>Social Platform Native Features – <span style="color:var(--yellow)">What creators use beyond posting</span></h2>
+      <p>The built-in features that rival – and sometimes outperform – third-party tools.</p>
+    </div>
+    <div class="platform-grid fi">
+      <div class="pf-card">
+        <span class="pf-icon">📊</span>
+        <h3>YouTube Studio Analytics</h3>
+        <p>The deepest native analytics in the industry. Real-time views, thumbnail CTR, <strong>per-second viewer drop-off graph</strong>, revenue breakdown by ad type. Irreplaceable for content structure optimization. No third-party tool matches its depth for YouTube data.</p>
+        <div class="pf-stat">$2–$75 <span>CPM in finance/B2B niches</span></div>
+      </div>
+      <div class="pf-card">
+        <span class="pf-icon">🔍</span>
+        <h3>TikTok Creator Search Insights</h3>
+        <p>Trending search terms, emerging topics, demographic overlay on performance. <strong>AI Trend Insights surfaces topics before they peak</strong> – giving creators a first-mover advantage. Critical as TikTok's search-driven discovery grows faster than its algorithmic feed.</p>
+        <div class="pf-stat">$0.40–$1.00 <span>per 1K views via Creator Rewards</span></div>
+      </div>
+      <div class="pf-card">
+        <span class="pf-icon">💬</span>
+        <h3>Instagram Broadcast Channels</h3>
+        <p>One-to-many messaging to subscriber lists without algorithmic filter. Used for product launches and exclusive deals. <strong>40–60% of brand deals for micro-influencers begin via Instagram DM.</strong> No native CRM exists to track conversation status.</p>
+        <div class="pf-stat">64% <span>of IG purchase decisions start in DMs</span></div>
+      </div>
+      <div class="pf-card">
+        <span class="pf-icon">🎁</span>
+        <h3>TikTok LIVE + Virtual Gifts</h3>
+        <p>Gifts → Diamonds → USD. <strong>A creator with 50K highly engaged fans can outperform a 2M passive-follower account</strong> in live session revenue. Engagement-to-monetization ratio now more important than raw follower count.</p>
+        <div class="pf-stat">$35K+ <span>top creators per single live session</span></div>
+      </div>
+      <div class="pf-card">
+        <span class="pf-icon">⭐</span>
+        <h3>YouTube Super Chat / Super Thanks</h3>
+        <p>Super Chat: highlighted paid messages during live streams. Super Thanks: one-time tips on regular videos – an unusual social proof mechanism. YouTube keeps 30%. Used most by gaming and long-form discussion creators.</p>
+        <div class="pf-stat">30% <span>YouTube revenue share on all super features</span></div>
+      </div>
+      <div class="pf-card">
+        <span class="pf-icon">🛒</span>
+        <h3>TikTok Shop Affiliate Program</h3>
+        <p>100K+ creators using the program. <strong>TikTok affiliate links drive 5.2% engagement – 160% higher than Instagram.</strong> Micro-influencers under 50K followers see 1,570% higher affiliate performance on TikTok vs. comparable Instagram influencers.</p>
+        <div class="pf-stat">$66B <span>projected TikTok Shop GMV for 2025</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section class="white" id="compare">
+  <div class="wrap">
+    <div class="section-head fi">
+      <div class="label">Comparative Overview</div>
+      <h2>Category-by-category breakdown</h2>
+      <p>Market leaders, budget options, and the gaps that remain across all 11 categories.</p>
+    </div>
+    <div class="fi" style="overflow-x:auto;">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th style="width:18%">Category</th>
+            <th style="width:28%">Market Leader</th>
+            <th style="width:22%">Best Budget Option</th>
+            <th>Gap / Weakness</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Video Editing</td><td>CapCut (banned US) / Descript</td><td>DaVinci Resolve (free)</td><td><span class="gap-pill">No US CapCut replacement at scale</span></td></tr>
+          <tr><td>Graphic Design</td><td>Canva</td><td>Canva (free tier)</td><td>Templates limit brand differentiation</td></tr>
+          <tr><td>Scheduling</td><td>Later (visual) / Buffer (budget)</td><td>Platform-native tools</td><td><span class="gap-pill">Enterprise tools abandoned solo creators</span></td></tr>
+          <tr><td>Monetization</td><td>Kajabi (premium) / Substack (ease)</td><td>Ko-fi (free)</td><td>No mid-market winner at $50–149/month</td></tr>
+          <tr><td>Link-in-bio</td><td>Linktree (recognition) / Stan Store (conversion)</td><td>Linktree free</td><td>Converging with storefront – winner TBD</td></tr>
+          <tr><td>Analytics</td><td>YouTube Studio (native) / HypeAuditor (brand)</td><td>Metricool (freemium)</td><td><span class="gap-pill">No affordable creator-side cross-platform tool</span></td></tr>
+          <tr><td>Brand Deal Mgmt</td><td>GRIN (brand-side)</td><td>Notion DIY</td><td><span class="gap-pill">Creator-side CRM is the largest gap</span></td></tr>
+          <tr><td>Community</td><td>Circle (courses+community) / Discord (free)</td><td>Discord</td><td>Skool growing fast via Hormozi distribution</td></tr>
+          <tr><td>DM Automation</td><td>ManyChat</td><td>InstantDM ($8/mo)</td><td>ManyChat pricing expensive at scale</td></tr>
+          <tr><td>Email Marketing</td><td>Kit / Beehiiv</td><td>Kit free tier</td><td>Substack 10% cut expensive at scale</td></tr>
+          <tr><td>Financial Mgmt</td><td>QuickBooks</td><td>Wave (free)</td><td><span class="gap-pill">No creator-native financial OS exists</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SYNTHESIS -->
+<section class="dark" id="synthesis">
+  <div class="wrap">
+    <div class="section-head on-dark fi">
+      <div class="label on-dark">Synthesis</div>
+      <h2>Seven patterns that define this market</h2>
+      <p>The structural forces driving everything in the creator tool ecosystem.</p>
+    </div>
+    <div class="synth-list fi">
+      <div class="synth-row">
+        <div class="synth-idx">01</div>
+        <div class="synth-content">
+          <h3>Platform ownership anxiety drives the <em>entire</em> third-party tool market</h3>
+          <p>Every significant non-social-media tool a creator uses exists because the platform they publish on either <strong>can't be trusted with that function or actively withholds it</strong>. Email lists exist because Instagram could ban an account tomorrow. Patreon exists because YouTube's ad revenue is algorithmically volatile. The entire creator tool ecosystem is a hedge against platform dependency.</p>
+        </div>
+      </div>
+      <div class="synth-row">
+        <div class="synth-idx">02</div>
+        <div class="synth-content">
+          <h3>The creator tech stack is collapsing toward <em>3–4 super-apps</em></h3>
+          <p>Linktree → Beacons (added store + brand deals). Kit → added products + ad marketplace. Circle → added courses. Skool → added community. <strong>Every tool is expanding to absorb adjacent categories.</strong> The market is racing toward a "creator OS." No winner has emerged. This is the most contested space in creator tools.</p>
+        </div>
+      </div>
+      <div class="synth-row">
+        <div class="synth-idx">03</div>
+        <div class="synth-content">
+          <h3>DM automation became the <em>dominant growth mechanic</em> of 2024–2025</h3>
+          <p>The comment-to-DM automation mechanic (primarily via ManyChat) became the single most widely adopted growth tactic. It worked because it solved <strong>three distinct problems simultaneously</strong>: algorithm engagement boosting, lead capture, and sales conversion. ManyChat's $140M raise validates this as a structural behavior, not a trend.</p>
+        </div>
+      </div>
+      <div class="synth-row">
+        <div class="synth-idx">04</div>
+        <div class="synth-content">
+          <h3>TikTok Shop is rewriting the <em>ROI math</em> for brand partnerships</h3>
+          <p>Micro-influencer TikTok affiliate performance is <strong>1,570% higher than Instagram equivalents.</strong> This is not a marginal difference – it's a structural reordering of where brand and creator attention should go. The $66B projected TikTok Shop GMV for 2025 means influencer commerce on TikTok is a primary retail channel, not an experiment.</p>
+        </div>
+      </div>
+      <div class="synth-row">
+        <div class="synth-idx">05</div>
+        <div class="synth-content">
+          <h3>The creator-side brand deal gap is the <em>largest unsolved problem</em></h3>
+          <p>Brands have GRIN, CreatorIQ, Aspire, and Traackr. <strong>Creators have Notion and Google Sheets.</strong> 47% of influencer disputes stem from payment delays or misunderstandings. No dominant creator-native CRM exists for managing inbound pitches, deliverable tracking, contract storage, payment follow-up, and FTC compliance in one product.</p>
+        </div>
+      </div>
+      <div class="synth-row">
+        <div class="synth-idx">06</div>
+        <div class="synth-content">
+          <h3>Financial infrastructure for creators is <em>critically underdeveloped</em></h3>
+          <p>2.3 million full-time creators, each managing 5–15 income streams, quarterly estimated taxes, international payments, and deductible expense tracking – and <strong>the best product most use is QuickBooks Self-Employed</strong>, which was built for freelancers. No product handles multi-platform income aggregation + invoicing + tax + bookkeeping natively for creators.</p>
+        </div>
+      </div>
+      <div class="synth-row">
+        <div class="synth-idx">07</div>
+        <div class="synth-content">
+          <h3>Live streaming has changed the <em>follower-to-revenue equation</em></h3>
+          <p>Traditional creator economics: more followers = more brand deal rate = more revenue. TikTok LIVE disrupts this. <strong>A creator with 50K highly engaged fans can generate more per-session revenue</strong> via live gifts and TikTok Shop live than a creator with 2M passive followers. The engagement-to-monetization ratio now matters more than raw follower count.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORWARD LOOKING -->
+<section class="white" id="forward">
+  <div class="wrap">
+    <div class="section-head fi">
+      <div class="label">Forward-Looking Perspective</div>
+      <h2>What comes next</h2>
+    </div>
+    <p class="forward-intro fi">These are not predictions – they are structural forces already in motion. The gaps identified in this report will be filled. The only question is by whom, and when.</p>
+    <div class="forward-grid fi">
+      <div class="forward-card">
+        <div class="forward-card-left">
+          <div class="forward-year">2026–2027</div>
+          <div class="forward-card-num">01</div>
+        </div>
+        <div>
+          <h3>AI-native tools will eliminate entire workflow steps</h3>
+          <p>Captions.ai, Descript's eye-contact correction, Notion AI – expect 60–70% of current creator production tools to integrate generative AI at their core. Editing, scripting, and design workflows will compress from hours to minutes.</p>
+        </div>
+      </div>
+      <div class="forward-card">
+        <div class="forward-card-left">
+          <div class="forward-year">2025–2026</div>
+          <div class="forward-card-num">02</div>
+        </div>
+        <div>
+          <h3>The creator-side CRM gap will be filled</h3>
+          <p>The market is large enough (2.3M+ full-time creators, $32B+ brand deal spend) and the pain is acute enough that a purpose-built creator-side brand deal management product will either emerge organically or be acquired.</p>
+        </div>
+      </div>
+      <div class="forward-card">
+        <div class="forward-card-left">
+          <div class="forward-year">2025–2027</div>
+          <div class="forward-card-num">03</div>
+        </div>
+        <div>
+          <h3>Financial services for creators is the next VC category</h3>
+          <p>Banking, payment aggregation, tax management, and income smoothing designed for multi-stream creator income is the clearest white space in the creator stack. Expect significant VC attention and founder activity in this category.</p>
+        </div>
+      </div>
+      <div class="forward-card">
+        <div class="forward-card-left">
+          <div class="forward-year">Ongoing</div>
+          <div class="forward-card-num">04</div>
+        </div>
+        <div>
+          <h3>Platform-native features will commoditize scheduling and basic analytics</h3>
+          <p>As Instagram, TikTok, and YouTube mature their native creator tools, simple scheduling and basic analytics become commoditized – consolidating the market toward tools with deeper, defensible functionality: competitive intelligence, fraud detection, and multi-platform income tracking.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-title">Creator Tools & Platform Features Research</div>
+      <div>March 2026 · Influencer Marketing Industry</div>
+    </div>
+    <div class="footer-sources">
+      <div class="footer-sources-head">Data Sources</div>
+      Sensor Tower · IMH 2025 · Sacra · Fortune Business Insights · EMARKETER · Meta internal data (via ManyChat) · SNS Insider · Market.us · Influencer Marketing Hub · DemandSage · Stack Influence · MilX · Resourcera · Circle research · Buffer · Later · Sprout Social · HypeAuditor / CreatorIQ
+    </div>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }});
+  }, { threshold: 0.07, rootMargin: '0px 0px -32px 0px' });
+  document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+
+  // Nav scroll-spy
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const navSections = document.querySelectorAll('section[id]');
+  const navObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -65% 0px' });
+  navSections.forEach(s => navObs.observe(s));
+
+  // Integration logo mapping: label → favicon domain
+  const INT_DOMAINS = {
+    'tiktok': 'tiktok.com', 'tiktok shop': 'shop.tiktok.com', 'tiktok dms (beta)': 'tiktok.com',
+    'instagram': 'instagram.com', 'instagram reels': 'instagram.com',
+    'youtube': 'youtube.com', 'youtube shorts': 'youtube.com',
+    'facebook': 'facebook.com', 'facebook messenger': 'facebook.com', 'facebook pixel': 'facebook.com',
+    'x': 'x.com', 'twitter/x': 'x.com',
+    'linkedin': 'linkedin.com', 'pinterest': 'pinterest.com',
+    'threads': 'threads.net', 'bluesky': 'bsky.app', 'mastodon': 'mastodon.social',
+    'twitch': 'twitch.tv', 'snapchat': 'snapchat.com', 'reddit': 'reddit.com',
+    'shopify': 'shopify.com', 'woocommerce': 'woocommerce.com', 'bigcommerce': 'bigcommerce.com',
+    'magento': 'magento.com', 'etsy': 'etsy.com', 'amazon': 'amazon.com',
+    'stripe': 'stripe.com', 'paypal': 'paypal.com', 'venmo': 'venmo.com',
+    'square': 'squareup.com', 'wise': 'wise.com', 'payoneer': 'payoneer.com',
+    'hyperwallet': 'hyperwallet.com',
+    'zapier': 'zapier.com', 'make (integromat)': 'make.com', 'ifttt': 'ifttt.com', 'n8n': 'n8n.io',
+    'google drive': 'drive.google.com', 'google analytics': 'analytics.google.com',
+    'google workspace': 'workspace.google.com', 'google sheets': 'sheets.google.com',
+    'looker studio': 'lookerstudio.google.com',
+    'dropbox': 'dropbox.com', 'onedrive': 'onedrive.live.com', 'sharepoint': 'sharepoint.com',
+    'slack': 'slack.com', 'hubspot': 'hubspot.com', 'salesforce': 'salesforce.com',
+    'mailchimp': 'mailchimp.com', 'activecampaign': 'activecampaign.com',
+    'klaviyo': 'klaviyo.com', 'aweber': 'aweber.com', 'flodesk': 'flodesk.com',
+    'kit': 'kit.com', 'beehiiv': 'beehiiv.com', 'ghost': 'ghost.org',
+    'canva': 'canva.com', 'adobe': 'adobe.com', 'adobe premiere': 'adobe.com',
+    'wordpress': 'wordpress.com', 'webflow': 'webflow.com', 'wix': 'wix.com',
+    'squarespace': 'squarespace.com',
+    'kajabi': 'kajabi.com', 'teachable': 'teachable.com', 'thinkific': 'thinkific.com',
+    'circle': 'circle.so', 'skool': 'skool.com', 'discord': 'discord.com',
+    'patreon': 'patreon.com', 'memberful': 'memberful.com', 'memberpress': 'memberpress.com',
+    'gumroad': 'gumroad.com', 'stan store': 'stan.store', 'ko-fi': 'ko-fi.com',
+    'manychat': 'manychat.com', 'twilio': 'twilio.com',
+    'docusign': 'docusign.com', 'typeform': 'typeform.com', 'calendly': 'calendly.com',
+    'notion': 'notion.so', 'airtable': 'airtable.com', 'clickup': 'clickup.com',
+    'monday.com': 'monday.com', 'trello': 'trello.com', 'asana': 'asana.com',
+    'hubspot': 'hubspot.com', 'pipedrive': 'pipedrive.com',
+    'spotify': 'spotify.com', 'apple podcasts': 'podcasts.apple.com',
+    'buzzsprout': 'buzzsprout.com', 'transistor': 'transistor.fm',
+    'vimeo': 'vimeo.com', 'wistia': 'wistia.com',
+    'xero': 'xero.com', 'quickbooks': 'quickbooks.intuit.com', 'freshbooks': 'freshbooks.com',
+    'wave': 'waveapps.com', 'gusto': 'gusto.com',
+    'shopify': 'shopify.com', 'spring (merch)': 'spri.ng',
+    'tableau': 'tableau.com', 'auth0': 'auth0.com',
+    'medium import': 'medium.com', 'medium': 'medium.com',
+    'thrivecart': 'thrivecart.com', 'samcart': 'samcart.com',
+    'cj affiliate': 'cj.com', 'awin': 'awin.com', 'impact': 'impact.com',
+    'rakuten advertising': 'rakuten.com',
+    'chatgpt': 'openai.com', 'claude': 'claude.ai',
+    'giphy': 'giphy.com', 'pexels': 'pexels.com',
+    'final cut pro': 'apple.com', 'davinci resolve': 'blackmagicdesign.com',
+  };
+
+  document.querySelectorAll('.itag').forEach(tag => {
+    const key = tag.textContent.trim().toLowerCase();
+    const domain = INT_DOMAINS[key];
+    if (domain) {
+      const img = document.createElement('img');
+      img.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
+      img.alt = tag.textContent.trim();
+      img.loading = 'lazy';
+      tag.insertBefore(img, tag.firstChild);
+    }
+  });
+</script>
+
+<!-- Avatar Circle -->
+<div id="avatar-root"></div>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18",
+    "react-dom": "https://esm.sh/react-dom@18",
+    "react-dom/client": "https://esm.sh/react-dom@18/client",
+    "react/jsx-runtime": "https://esm.sh/react@18/jsx-runtime",
+    "@runwayml/avatars-react": "https://esm.sh/@runwayml/avatars-react?external=react,react-dom"
+  }
+}
+</script>
+<link rel="stylesheet" href="https://esm.sh/@runwayml/avatars-react/styles.css">
+<script type="module">
+  import React from 'react';
+  import { createRoot } from 'react-dom/client';
+  import { AvatarCall, AvatarVideo, ControlBar } from '@runwayml/avatars-react';
+
+  const { useState, createElement: h } = React;
+
+  // ── CONFIG: set your avatar ID and server connect endpoint ──
+  const AVATAR_ID = '6f71822a-e906-4bcc-9ecc-7a4e3da0a409';
+  const CONNECT_URL = '/api/avatar/connect';
+
+  function AvatarCircle() {
+    const [open, setOpen] = useState(false);
+    const [calling, setCalling] = useState(false);
+    const [error, setError] = useState(null);
+
+    function handleClick() {
+      if (calling || error) {
+        setCalling(false);
+        setOpen(false);
+        setError(null);
+      } else {
+        setError(null);
+        setOpen(true);
+        setCalling(true);
+      }
+    }
+
+    function handleEnd() {
+      setCalling(false);
+      setOpen(false);
+      setError(null);
+    }
+
+    function handleError(err) {
+      console.error('Avatar error:', err);
+      setCalling(false);
+      setError(err?.message || 'Connection failed');
+    }
+
+    const panelContent = error
+      ? h('div', {
+          style: {
+            width: '100%', height: '100%',
+            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+            color: 'rgba(255,255,255,0.6)', fontSize: '14px', fontFamily: 'Inter, sans-serif',
+            padding: '24px', textAlign: 'center', gap: '12px',
+          }
+        },
+          h('div', { style: { fontSize: '24px' } }, '\u26A0'),
+          h('div', null, error),
+          h('button', {
+            onClick: () => { setError(null); setCalling(true); },
+            style: { marginTop: '8px', padding: '6px 16px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.2)', background: 'transparent', color: 'white', cursor: 'pointer', fontSize: '13px' },
+          }, 'Retry')
+        )
+      : calling
+        ? h(AvatarCall, {
+            avatarId: AVATAR_ID,
+            connectUrl: CONNECT_URL,
+            className: 'avatar-call-wrapper',
+            onEnd: handleEnd,
+            onError: handleError,
+          },
+            h(AvatarVideo, { style: { width: '100%', height: '100%', objectFit: 'cover' } }),
+            h(ControlBar, { style: { position: 'absolute', bottom: 0, left: 0, right: 0 } })
+          )
+        : null;
+
+    return h('div', null,
+      h('div', { className: `avatar-panel ${open ? 'open' : ''}` }, panelContent),
+      h('button', {
+        className: `avatar-bubble ${calling || error ? 'active' : ''}`,
+        onClick: handleClick,
+        'aria-label': calling || error ? 'End avatar call' : 'Talk to AI avatar',
+        title: calling || error ? 'End call' : 'Talk to AI avatar',
+      },
+        calling || error
+          ? h('svg', { viewBox: '0 0 24 24' },
+              h('path', { d: 'M6.34 6.34a1 1 0 011.41 0L12 10.59l4.24-4.25a1 1 0 111.42 1.42L13.41 12l4.25 4.24a1 1 0 01-1.42 1.42L12 13.41l-4.25 4.25a1 1 0 01-1.41-1.42L10.59 12 6.34 7.76a1 1 0 010-1.42z' })
+            )
+          : h('svg', { viewBox: '0 0 24 24' },
+              h('path', { d: 'M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14v-4zM3 6h10a2 2 0 012 2v8a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2z' })
+            )
+      )
+    );
+  }
+
+  createRoot(document.getElementById('avatar-root')).render(h(AvatarCircle));
+</script>
+</body>
+</html>
